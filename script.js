@@ -11,6 +11,11 @@ const CONFIG = {
   // is the same for every visitor, not just your own browser.
   JSONBIN_BIN_ID: "YOUR_BIN_ID",
   JSONBIN_API_KEY: "YOUR_JSONBIN_X_ACCESS_KEY",
+
+  // Admin passcode — change this to something private only you know.
+  // Visiting yoursite.com/?admin=THIS_VALUE once unlocks the upload
+  // button on that browser. Normal visitors never see it.
+  ADMIN_PASSCODE: "pmk-set-your-own-passcode",
 };
 
 const isConfigured = () =>
@@ -22,6 +27,37 @@ const hasSharedStore = () =>
   !CONFIG.JSONBIN_API_KEY.startsWith("YOUR_");
 
 const LOCAL_KEY = "pmk_gallery_local_fallback";
+const ADMIN_KEY = "pmk_admin_unlocked";
+
+/* ============================================================
+   ADMIN MODE — upload UI is hidden from regular visitors.
+   Visit yoursite.com/?admin=YOUR_PASSCODE once to unlock it on
+   that browser; it stays unlocked until "Exit admin view" is
+   clicked or site data/localStorage is cleared.
+   ============================================================ */
+function isAdmin() {
+  return localStorage.getItem(ADMIN_KEY) === "true";
+}
+
+function checkAdminUnlock() {
+  const params = new URLSearchParams(window.location.search);
+  const key = params.get("admin");
+
+  if (key && CONFIG.ADMIN_PASSCODE && key === CONFIG.ADMIN_PASSCODE) {
+    localStorage.setItem(ADMIN_KEY, "true");
+    // scrub the passcode out of the visible URL
+    params.delete("admin");
+    const query = params.toString();
+    const cleanUrl =
+      window.location.pathname + (query ? `?${query}` : "") + window.location.hash;
+    window.history.replaceState({}, "", cleanUrl);
+  }
+}
+
+function applyAdminVisibility() {
+  document.getElementById("uploadBlock").style.display = isAdmin() ? "flex" : "none";
+  document.getElementById("adminBanner").style.display = isAdmin() ? "block" : "none";
+}
 
 /* ============================================================
    GALLERY STATE
@@ -85,12 +121,14 @@ function renderGallery() {
     grid.appendChild(frame);
   });
 
-  const emptySlots = Math.max(0, MIN_FRAMES - photos.length);
-  for (let i = 0; i < emptySlots; i++) {
-    const frame = document.createElement("div");
-    frame.className = "frame frame-empty";
-    frame.textContent = "AWAITING\nUPLOAD";
-    grid.appendChild(frame);
+  if (isAdmin()) {
+    const emptySlots = Math.max(0, MIN_FRAMES - photos.length);
+    for (let i = 0; i < emptySlots; i++) {
+      const frame = document.createElement("div");
+      frame.className = "frame frame-empty";
+      frame.textContent = "AWAITING\nUPLOAD";
+      grid.appendChild(frame);
+    }
   }
 }
 
@@ -111,6 +149,13 @@ document.getElementById("lightbox").addEventListener("click", (e) => {
 });
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeLightbox();
+});
+
+/* ============================================================
+   NAV MARK — clicking P.M.K. refreshes the page
+   ============================================================ */
+document.getElementById("navMark").addEventListener("click", () => {
+  window.location.reload();
 });
 
 /* ============================================================
@@ -161,6 +206,12 @@ fileInput.addEventListener("change", async () => {
   fileInput.value = "";
 });
 
+document.getElementById("adminExit").addEventListener("click", () => {
+  localStorage.removeItem(ADMIN_KEY);
+  applyAdminVisibility();
+  renderGallery();
+});
+
 async function uploadToCloudinary(file) {
   const form = new FormData();
   form.append("file", file);
@@ -180,6 +231,15 @@ async function uploadToCloudinary(file) {
    ============================================================ */
 (async function init() {
   document.getElementById("year").textContent = new Date().getFullYear();
+
+  checkAdminUnlock();
+  applyAdminVisibility();
+
+  if (!isAdmin()) {
+    await loadPhotos();
+    renderGallery();
+    return;
+  }
 
   if (!isConfigured()) {
     uploadHint.textContent =
