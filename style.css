@@ -69,6 +69,10 @@ img{ max-width:100%; display:block; }
   letter-spacing:0.12em;
   font-size:1.2rem;
   color:var(--gold);
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:0;
 }
 .nav-links{ display:flex; gap:2rem; }
 .nav-links a{
@@ -299,6 +303,53 @@ img{ max-width:100%; display:block; }
   font-family:var(--mono);
   font-size:0.72rem;
   color:var(--muted);
+}
+
+.admin-exit{
+  background:none;
+  border:none;
+  font-family:var(--mono);
+  font-size:0.68rem;
+  letter-spacing:0.06em;
+  color:var(--muted);
+  text-decoration:underline;
+  cursor:pointer;
+  padding:0;
+}
+.admin-exit:hover{ color:var(--gold); }
+
+.admin-banner{
+  max-width:1100px;
+  margin:0 auto;
+  padding:0.9rem 1.5rem;
+  background:rgba(200,155,60,0.08);
+  border-bottom:1px solid var(--line);
+  font-family:var(--mono);
+  font-size:0.74rem;
+  letter-spacing:0.03em;
+  color:var(--gold);
+  display:none;
+}
+
+.admin-steps{
+  margin-top:1rem;
+  padding:1.2rem 1.4rem;
+  background:var(--bg-alt);
+  border:1px solid var(--line);
+  max-width:52ch;
+}
+.admin-steps ol{
+  margin:0.6rem 0 0 1.1rem;
+  color:var(--paper);
+  font-size:0.88rem;
+  line-height:1.7;
+}
+.admin-steps p{
+  font-family:var(--mono);
+  font-size:0.7rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--gold);
 }
 
 .btn{
