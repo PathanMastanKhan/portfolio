@@ -1,0 +1,65 @@
+# Pathan Mastan Khan — Talent Profile Site
+
+A single-page casting profile: clapperboard intro with your stats, a
+contact-sheet style photo gallery, and a booking/contact section.
+Plain HTML/CSS/JS — no build step, deploys to Vercel as-is.
+
+## 1. Deploy to Vercel
+
+1. Create a free account at https://vercel.com
+2. Put these 3 files (`index.html`, `style.css`, `script.js`) in a GitHub repo,
+   or drag-and-drop the folder into a new Vercel project at
+   https://vercel.com/new
+3. Framework preset: **Other** (no build command needed — it's static).
+4. Deploy. You'll get a link like `pathan-mastan-khan.vercel.app` to share.
+
+## 2. Connect photo uploads (so they save online, for everyone)
+
+Right now the "Upload New Photo(s)" button is wired up but not connected
+to anywhere yet — you'll see a note under the button until you finish this.
+
+### Step A — Cloudinary (stores the actual photo files)
+1. Sign up free at https://cloudinary.com
+2. On your Dashboard, copy your **Cloud Name**.
+3. Go to **Settings → Upload → Upload presets → Add upload preset**.
+   - Set **Signing Mode** to **Unsigned**.
+   - Save, then copy the **preset name**.
+4. Open `script.js`, and near the top fill in:
+   ```js
+   CLOUDINARY_CLOUD_NAME: "your-cloud-name",
+   CLOUDINARY_UPLOAD_PRESET: "your-preset-name",
+   ```
+
+With just this step done, uploads work and photos are hosted online —
+but the list of photos is only remembered in the browser you uploaded
+from. To make the gallery the same for every visitor (recommended, since
+casting directors will view it from their own device), do Step B too.
+
+### Step B — JSONBin (makes the gallery public/shared)
+1. Sign up free at https://jsonbin.io
+2. Create a new bin with this starting content: `{"photos": []}`
+3. Copy the **Bin ID** (in the URL or bin dashboard).
+4. Go to your account → **API Keys**, copy your **X-Access-Key**.
+5. In `script.js`, fill in:
+   ```js
+   JSONBIN_BIN_ID: "your-bin-id",
+   JSONBIN_API_KEY: "your-x-access-key",
+   ```
+
+**Note on security:** this key is visible in your site's public source code,
+same as the Cloudinary preset. That's fine for a small personal site like
+this one — worst case, someone could add/remove gallery photos. Don't
+reuse this JSONBin account or key for anything sensitive.
+
+6. Push the updated `script.js` to redeploy (Vercel redeploys automatically
+   on every push if connected to GitHub, or re-drag the folder otherwise).
+
+## 3. Editing your info
+
+All your stats, phone, email, and location live directly in `index.html` —
+search for the `Stats & Contact` and `Call Sheet` sections and edit the text.
+
+## Files
+- `index.html` — page structure and content
+- `style.css` — all styling (clapperboard hero, contact-sheet gallery, etc.)
+- `script.js` — upload logic + config (edit the `CONFIG` block at the top)
