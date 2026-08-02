@@ -205,6 +205,7 @@ img{ max-width:100%; display:block; }
 .stats{
   max-width:1100px; margin:0 auto;
   padding:6rem 1.5rem 5rem;
+  text-align:center;
 }
 .stat-card-grid{
   display:grid;
@@ -212,6 +213,7 @@ img{ max-width:100%; display:block; }
   gap:1px;
   background:var(--line);
   border:1px solid var(--line);
+  text-align:left;
 }
 .stat-card{
   background:var(--bg);
@@ -244,11 +246,12 @@ img{ max-width:100%; display:block; }
 .gallery{
   max-width:1100px; margin:0 auto;
   padding:2rem 1.5rem 5rem;
+  text-align:center;
 }
 .gallery-sub{
   color:var(--muted);
   max-width:52ch;
-  margin-bottom:2.4rem;
+  margin:0 auto 2.4rem;
 }
 
 .contact-sheet{
@@ -297,6 +300,21 @@ img{ max-width:100%; display:block; }
   padding:2px 6px;
 }
 
+.frame-delete{
+  position:absolute; top:6px; right:6px;
+  width:24px; height:24px;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(13,12,10,0.75);
+  color:var(--paper);
+  border:1px solid var(--line);
+  font-family:var(--mono);
+  font-size:0.85rem;
+  line-height:1;
+  cursor:pointer;
+  transition:background .2s, color .2s;
+}
+.frame-delete:hover{ background:var(--red); color:var(--paper); }
+
 .frame-empty{
   display:flex; align-items:center; justify-content:center;
   color:var(--muted);
@@ -308,7 +326,7 @@ img{ max-width:100%; display:block; }
 
 .upload-block{
   margin-top:2.2rem;
-  display:flex; flex-direction:column; align-items:flex-start; gap:0.7rem;
+  display:flex; flex-direction:column; align-items:center; gap:0.7rem;
 }
 .upload-hint{
   font-family:var(--mono);
@@ -343,11 +361,12 @@ img{ max-width:100%; display:block; }
 }
 
 .admin-steps{
-  margin-top:1rem;
+  margin:1rem auto 0;
   padding:1.2rem 1.4rem;
   background:var(--bg-alt);
   border:1px solid var(--line);
   max-width:52ch;
+  text-align:left;
 }
 .admin-steps ol{
   margin:0.6rem 0 0 1.1rem;
@@ -470,7 +489,6 @@ a.call-value:hover{ color:var(--gold); }
     <nav class="nav-links">
       <a href="#stats">Stats</a>
       <a href="#gallery">Gallery</a>
-      <a href="#book">Book</a>
     </nav>
     <a href="#book" class="nav-cta">Contact</a>
   </div>
@@ -616,8 +634,8 @@ const CONFIG = {
 
   // JSONBin — stores the *list* of photo URLs so the gallery
   // is the same for every visitor, not just your own browser.
-  JSONBIN_BIN_ID: "YOUR_BIN_ID",
-  JSONBIN_API_KEY: "YOUR_JSONBIN_X_ACCESS_KEY",
+  JSONBIN_BIN_ID: "6a6f3ecbf5f4af5e29e10944",
+  JSONBIN_API_KEY: "$2a$10$WDckFhZfNFyxkkssOLRXDeuVuNw/debYv6O.8TODv2uUwEwAP5J5O",
 
   // Admin passcode — change this to something private only you know.
   // Visiting yoursite.com/?admin=THIS_VALUE once unlocks the upload
@@ -723,8 +741,20 @@ function renderGallery() {
     frame.innerHTML = `
       <span class="frame-num">${String(i + 1).padStart(2, "0")}</span>
       <img src="${p.url}" alt="Portfolio photo ${i + 1}" loading="lazy">
+      ${isAdmin() ? `<button class="frame-delete" data-index="${i}" aria-label="Delete photo ${i + 1}" title="Delete photo">×</button>` : ""}
     `;
-    frame.addEventListener("click", () => openLightbox(p.url));
+    frame.querySelector("img").addEventListener("click", () => openLightbox(p.url));
+
+    if (isAdmin()) {
+      frame.querySelector(".frame-delete").addEventListener("click", async (e) => {
+        e.stopPropagation();
+        if (!confirm("Delete this photo? This can't be undone.")) return;
+        photos.splice(i, 1);
+        await savePhotos();
+        renderGallery();
+      });
+    }
+
     grid.appendChild(frame);
   });
 
