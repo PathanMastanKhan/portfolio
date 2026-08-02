@@ -80,6 +80,10 @@ img{ max-width:100%; display:block; }
   letter-spacing:0.12em;
   font-size:1.2rem;
   color:var(--gold);
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:0;
 }
 .nav-links{ display:flex; gap:2rem; }
 .nav-links a{
@@ -312,6 +316,53 @@ img{ max-width:100%; display:block; }
   color:var(--muted);
 }
 
+.admin-exit{
+  background:none;
+  border:none;
+  font-family:var(--mono);
+  font-size:0.68rem;
+  letter-spacing:0.06em;
+  color:var(--muted);
+  text-decoration:underline;
+  cursor:pointer;
+  padding:0;
+}
+.admin-exit:hover{ color:var(--gold); }
+
+.admin-banner{
+  max-width:1100px;
+  margin:0 auto;
+  padding:0.9rem 1.5rem;
+  background:rgba(200,155,60,0.08);
+  border-bottom:1px solid var(--line);
+  font-family:var(--mono);
+  font-size:0.74rem;
+  letter-spacing:0.03em;
+  color:var(--gold);
+  display:none;
+}
+
+.admin-steps{
+  margin-top:1rem;
+  padding:1.2rem 1.4rem;
+  background:var(--bg-alt);
+  border:1px solid var(--line);
+  max-width:52ch;
+}
+.admin-steps ol{
+  margin:0.6rem 0 0 1.1rem;
+  color:var(--paper);
+  font-size:0.88rem;
+  line-height:1.7;
+}
+.admin-steps p{
+  font-family:var(--mono);
+  font-size:0.7rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--gold);
+}
+
 .btn{
   font-family:var(--mono);
   font-size:0.78rem;
@@ -415,7 +466,7 @@ a.call-value:hover{ color:var(--gold); }
 <!-- ============ NAV ============ -->
 <header class="nav">
   <div class="nav-inner">
-    <span class="nav-mark">P.M.K.</span>
+    <button class="nav-mark" id="navMark" title="Refresh page">P.M.K.</button>
     <nav class="nav-links">
       <a href="#stats">Stats</a>
       <a href="#gallery">Gallery</a>
@@ -424,6 +475,8 @@ a.call-value:hover{ color:var(--gold); }
     <a href="#book" class="nav-cta">Contact</a>
   </div>
 </header>
+
+<div class="admin-banner" id="adminBanner">Admin view — only you see this. Visitors see the public page with no upload option.</div>
 
 <!-- ============ HERO / CLAPPERBOARD ============ -->
 <section class="hero" id="top">
@@ -495,12 +548,25 @@ a.call-value:hover{ color:var(--gold); }
     <div class="sprockets sprockets-bottom" aria-hidden="true"></div>
   </div>
 
-  <div class="upload-block">
+  <div class="upload-block" id="uploadBlock" style="display:none;">
     <input type="file" id="fileInput" accept="image/*" multiple hidden>
     <button class="btn btn-outline" id="uploadBtn">
       <span id="uploadBtnText">+ Upload New Photo(s)</span>
     </button>
     <p class="upload-hint" id="uploadHint">High-resolution images are saved directly to the online media library.</p>
+
+    <div class="admin-steps">
+      <p>How to upload</p>
+      <ol>
+        <li>Click <strong>"+ Upload New Photo(s)"</strong> above.</li>
+        <li>Choose one or more image files from your device.</li>
+        <li>Wait for the button to say "Uploading…" — this sends each photo to your online media library.</li>
+        <li>Once it finishes, the new photo(s) appear instantly at the front of the gallery, numbered.</li>
+        <li>They're now live for anyone visiting your public link.</li>
+      </ol>
+    </div>
+
+    <button class="admin-exit" id="adminExit">Exit admin view</button>
   </div>
 </section>
 
@@ -552,6 +618,11 @@ const CONFIG = {
   // is the same for every visitor, not just your own browser.
   JSONBIN_BIN_ID: "YOUR_BIN_ID",
   JSONBIN_API_KEY: "YOUR_JSONBIN_X_ACCESS_KEY",
+
+  // Admin passcode — change this to something private only you know.
+  // Visiting yoursite.com/?admin=THIS_VALUE once unlocks the upload
+  // button on that browser. Normal visitors never see it.
+  ADMIN_PASSCODE: "pmk-set-your-own-passcode",
 };
 
 const isConfigured = () =>
@@ -563,6 +634,37 @@ const hasSharedStore = () =>
   !CONFIG.JSONBIN_API_KEY.startsWith("YOUR_");
 
 const LOCAL_KEY = "pmk_gallery_local_fallback";
+const ADMIN_KEY = "pmk_admin_unlocked";
+
+/* ============================================================
+   ADMIN MODE — upload UI is hidden from regular visitors.
+   Visit yoursite.com/?admin=YOUR_PASSCODE once to unlock it on
+   that browser; it stays unlocked until "Exit admin view" is
+   clicked or site data/localStorage is cleared.
+   ============================================================ */
+function isAdmin() {
+  return localStorage.getItem(ADMIN_KEY) === "true";
+}
+
+function checkAdminUnlock() {
+  const params = new URLSearchParams(window.location.search);
+  const key = params.get("admin");
+
+  if (key && CONFIG.ADMIN_PASSCODE && key === CONFIG.ADMIN_PASSCODE) {
+    localStorage.setItem(ADMIN_KEY, "true");
+    // scrub the passcode out of the visible URL
+    params.delete("admin");
+    const query = params.toString();
+    const cleanUrl =
+      window.location.pathname + (query ? `?${query}` : "") + window.location.hash;
+    window.history.replaceState({}, "", cleanUrl);
+  }
+}
+
+function applyAdminVisibility() {
+  document.getElementById("uploadBlock").style.display = isAdmin() ? "flex" : "none";
+  document.getElementById("adminBanner").style.display = isAdmin() ? "block" : "none";
+}
 
 /* ============================================================
    GALLERY STATE
@@ -626,12 +728,14 @@ function renderGallery() {
     grid.appendChild(frame);
   });
 
-  const emptySlots = Math.max(0, MIN_FRAMES - photos.length);
-  for (let i = 0; i < emptySlots; i++) {
-    const frame = document.createElement("div");
-    frame.className = "frame frame-empty";
-    frame.textContent = "AWAITING\nUPLOAD";
-    grid.appendChild(frame);
+  if (isAdmin()) {
+    const emptySlots = Math.max(0, MIN_FRAMES - photos.length);
+    for (let i = 0; i < emptySlots; i++) {
+      const frame = document.createElement("div");
+      frame.className = "frame frame-empty";
+      frame.textContent = "AWAITING\nUPLOAD";
+      grid.appendChild(frame);
+    }
   }
 }
 
@@ -652,6 +756,13 @@ document.getElementById("lightbox").addEventListener("click", (e) => {
 });
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeLightbox();
+});
+
+/* ============================================================
+   NAV MARK — clicking P.M.K. refreshes the page
+   ============================================================ */
+document.getElementById("navMark").addEventListener("click", () => {
+  window.location.reload();
 });
 
 /* ============================================================
@@ -702,6 +813,12 @@ fileInput.addEventListener("change", async () => {
   fileInput.value = "";
 });
 
+document.getElementById("adminExit").addEventListener("click", () => {
+  localStorage.removeItem(ADMIN_KEY);
+  applyAdminVisibility();
+  renderGallery();
+});
+
 async function uploadToCloudinary(file) {
   const form = new FormData();
   form.append("file", file);
@@ -721,6 +838,15 @@ async function uploadToCloudinary(file) {
    ============================================================ */
 (async function init() {
   document.getElementById("year").textContent = new Date().getFullYear();
+
+  checkAdminUnlock();
+  applyAdminVisibility();
+
+  if (!isAdmin()) {
+    await loadPhotos();
+    renderGallery();
+    return;
+  }
 
   if (!isConfigured()) {
     uploadHint.textContent =
