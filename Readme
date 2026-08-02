@@ -13,7 +13,37 @@ Plain HTML/CSS/JS — no build step, deploys to Vercel as-is.
 3. Framework preset: **Other** (no build command needed — it's static).
 4. Deploy. You'll get a link like `pathan-mastan-khan.vercel.app` to share.
 
-## 2. Connect photo uploads (so they save online, for everyone)
+## 2. Set your private admin link (so only you see the upload button)
+
+The upload button is hidden from everyone by default — visitors just see
+your stats and gallery. To unlock it for yourself:
+
+1. Open `script.js` and set your own private passcode:
+   ```js
+   ADMIN_PASSCODE: "something-only-you-know",
+   ```
+2. After deploying, visit your site once with `?admin=` and that passcode
+   added to the URL, e.g.:
+   ```
+   https://yoursite.vercel.app/?admin=something-only-you-know
+   ```
+3. That unlocks the upload button on that browser/device (saved locally),
+   and the passcode is scrubbed from the address bar right after. Bookmark
+   the plain link (without `?admin=...`) for normal use, and keep the
+   admin link private for when you need to add photos.
+4. To hide the button again on a device, click **"Exit admin view"** next
+   to the upload button.
+5. While in admin view, a gold banner appears at the top and a **"How to
+   upload"** panel walks you through the steps right on the page — you
+   won't need to come back to this README once it's set up.
+6. Clicking the **P.M.K.** logo in the top-left always refreshes the page
+   (handy after uploading a batch of new photos).
+
+**Note:** like the Cloudinary/JSONBin keys below, this passcode lives in
+your public source code, so it's a "keep casual visitors out" measure,
+not a strong security barrier. Don't reuse it as a password anywhere else.
+
+## 3. Connect photo uploads (so they save online, for everyone)
 
 Right now the "Upload New Photo(s)" button is wired up but not connected
 to anywhere yet — you'll see a note under the button until you finish this.
@@ -54,7 +84,7 @@ reuse this JSONBin account or key for anything sensitive.
 6. Push the updated `script.js` to redeploy (Vercel redeploys automatically
    on every push if connected to GitHub, or re-drag the folder otherwise).
 
-## 3. Editing your info
+## 4. Editing your info
 
 All your stats, phone, email, and location live directly in `index.html` —
 search for the `Stats & Contact` and `Call Sheet` sections and edit the text.
