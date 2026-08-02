@@ -1,1 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pathan Mastan Khan — Talent Profile</title>
+<meta name="description" content="Official casting profile for Pathan Mastan Khan. Stats, contact info, and portfolio gallery for casting directors." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg: #0D0C0A;
+  --bg-alt: #17150F;
+  --card: #1C1A14;
+  --paper: #F3EFE6;
+  --gold: #C89B3C;
+  --gold-dim: #8A6E30;
+  --red: #7A1E1E;
+  --muted: #8C8577;
+  --line: #322E24;
 
+  --display: 'Bebas Neue', sans-serif;
+  --body: 'Inter', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+html{ scroll-behavior:smooth; }
+
+body{
+  background:var(--bg);
+  color:var(--paper);
+  font-family:var(--body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+
+a{ color:inherit; text-decoration:none; }
+
+img{ max-width:100%; display:block; }
+
+:focus-visible{
+  outline:2px solid var(--gold);
+  outline-offset:3px;
+}
+
+.eyebrow{
+  font-family:var(--mono);
+  font-size:0.72rem;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:0.6rem;
+}
+
+.section-title{
+  font-family:var(--display);
+  font-size:clamp(2.2rem, 5vw, 3.4rem);
+  letter-spacing:0.02em;
+  color:var(--paper);
+  margin-bottom:2.2rem;
+}
+
+/* ============ NAV ============ */
+.nav{
+  position:sticky; top:0; z-index:50;
+  background:rgba(13,12,10,0.88);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{
+  max-width:1100px; margin:0 auto;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0.9rem 1.5rem;
+}
+.nav-mark{
+  font-family:var(--display);
+  letter-spacing:0.12em;
+  font-size:1.2rem;
+  color:var(--gold);
+}
+.nav-links{ display:flex; gap:2rem; }
+.nav-links a{
+  font-family:var(--mono);
+  font-size:0.75rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--muted);
+  transition:color .2s;
+}
+.nav-links a:hover{ color:var(--paper); }
+.nav-cta{
+  font-family:var(--mono);
+  font-size:0.72rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  border:1px solid var(--gold);
+  color:var(--gold);
+  padding:0.5rem 1rem;
+  transition:background .2s, color .2s;
+}
+.nav-cta:hover{ background:var(--gold); color:var(--bg); }
+
+@media (max-width:640px){
+  .nav-links{ display:none; }
+}
+
+/* ============ HERO / CLAPPERBOARD ============ */
+.hero{
+  min-height:92vh;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:2rem;
+  padding:3rem 1.5rem;
+  text-align:center;
+  background:
+    radial-gradient(ellipse at 50% 20%, rgba(200,155,60,0.08), transparent 60%),
+    var(--bg);
+}
+
+.clapper{
+  width:min(680px, 92vw);
+  border:2px solid var(--gold-dim);
+  background:var(--card);
+  box-shadow:0 30px 80px rgba(0,0,0,0.6);
+}
+
+.clapper-top{
+  height:34px;
+  background:repeating-linear-gradient(
+    -35deg,
+    #0D0C0A 0 22px,
+    var(--paper) 22px 44px
+  );
+  transform-origin:left center;
+  animation: clapOpen 0.9s cubic-bezier(.2,.7,.3,1) both;
+  animation-delay:.2s;
+  border-bottom:2px solid var(--gold-dim);
+}
+
+@keyframes clapOpen{
+  0%{ transform:rotate(-14deg); }
+  60%{ transform:rotate(2deg); }
+  100%{ transform:rotate(0deg); }
+}
+
+.clapper-body{ padding:2.4rem 2rem 2.6rem; }
+
+.slate-row{
+  display:flex; justify-content:space-between;
+  font-family:var(--mono);
+  font-size:0.7rem;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.slate-row--head{ margin-bottom:1.4rem; }
+.slate-row--foot{
+  margin-top:1.6rem;
+  flex-wrap:wrap;
+  gap:0.6rem;
+  justify-content:center;
+  border-top:1px dashed var(--line);
+  padding-top:1.2rem;
+}
+.slate-field{ color:var(--paper); }
+.slate-field-label{ color:var(--gold); margin-right:0.35rem; }
+
+.slate-name{
+  font-family:var(--display);
+  font-size:clamp(2.6rem, 8vw, 4.6rem);
+  line-height:1.02;
+  letter-spacing:0.01em;
+  color:var(--paper);
+}
+
+.hero-sub{
+  font-family:var(--mono);
+  font-size:0.85rem;
+  letter-spacing:0.06em;
+  color:var(--muted);
+}
+
+.scroll-cue{
+  font-size:1.3rem;
+  color:var(--gold);
+  animation:bob 2s ease-in-out infinite;
+}
+@keyframes bob{
+  0%,100%{ transform:translateY(0); }
+  50%{ transform:translateY(6px); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .clapper-top{ animation:none; }
+  .scroll-cue{ animation:none; }
+}
+
+/* ============ STATS ============ */
+.stats{
+  max-width:1100px; margin:0 auto;
+  padding:6rem 1.5rem 5rem;
+}
+.stat-card-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+  gap:1px;
+  background:var(--line);
+  border:1px solid var(--line);
+}
+.stat-card{
+  background:var(--bg);
+  padding:1.8rem 1.6rem;
+  display:flex; flex-direction:column; gap:0.5rem;
+}
+.stat-label{
+  font-family:var(--mono);
+  font-size:0.68rem;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--gold);
+}
+.stat-value{
+  font-family:var(--body);
+  font-weight:600;
+  font-size:1.15rem;
+  color:var(--paper);
+}
+.stat-value a{ transition:color .2s; }
+.stat-value a:hover{ color:var(--gold); }
+.stat-alt{
+  font-family:var(--mono);
+  font-weight:400;
+  font-size:0.9rem;
+  color:var(--muted);
+}
+
+/* ============ GALLERY / CONTACT SHEET ============ */
+.gallery{
+  max-width:1100px; margin:0 auto;
+  padding:2rem 1.5rem 5rem;
+}
+.gallery-sub{
+  color:var(--muted);
+  max-width:52ch;
+  margin-bottom:2.4rem;
+}
+
+.contact-sheet{
+  background:var(--bg-alt);
+  border:1px solid var(--line);
+}
+
+.sprockets{
+  height:16px;
+  background-image:radial-gradient(circle, var(--bg) 3.5px, transparent 3.6px);
+  background-size:22px 16px;
+  background-position:11px center;
+  background-repeat:repeat-x;
+  background-color:#000;
+}
+
+.frame-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(170px, 1fr));
+  gap:2px;
+  background:var(--line);
+  padding:2px;
+}
+
+.frame{
+  position:relative;
+  aspect-ratio:4/5;
+  background:var(--card);
+  overflow:hidden;
+  cursor:pointer;
+}
+.frame img{
+  width:100%; height:100%; object-fit:cover;
+  filter:grayscale(0.15) contrast(1.02);
+  transition:transform .4s ease, filter .3s ease;
+}
+.frame:hover img{ transform:scale(1.05); filter:grayscale(0) contrast(1.05); }
+
+.frame-num{
+  position:absolute; top:6px; left:8px;
+  font-family:var(--mono);
+  font-size:0.62rem;
+  letter-spacing:0.08em;
+  color:var(--gold);
+  background:rgba(13,12,10,0.7);
+  padding:2px 6px;
+}
+
+.frame-empty{
+  display:flex; align-items:center; justify-content:center;
+  color:var(--muted);
+  font-family:var(--mono);
+  font-size:0.7rem;
+  text-align:center;
+  padding:1rem;
+}
+
+.upload-block{
+  margin-top:2.2rem;
+  display:flex; flex-direction:column; align-items:flex-start; gap:0.7rem;
+}
+.upload-hint{
+  font-family:var(--mono);
+  font-size:0.72rem;
+  color:var(--muted);
+}
+
+.btn{
+  font-family:var(--mono);
+  font-size:0.78rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  padding:0.85rem 1.6rem;
+  cursor:pointer;
+  border:none;
+  transition:transform .15s ease, background .2s, color .2s;
+}
+.btn:active{ transform:scale(0.98); }
+.btn-outline{
+  background:transparent;
+  border:1px solid var(--gold);
+  color:var(--gold);
+}
+.btn-outline:hover{ background:var(--gold); color:var(--bg); }
+.btn-solid{
+  display:inline-block;
+  background:var(--gold);
+  color:var(--bg);
+  font-weight:700;
+}
+.btn-solid:hover{ background:var(--paper); }
+
+/* ============ LIGHTBOX ============ */
+.lightbox{
+  position:fixed; inset:0;
+  background:rgba(6,6,5,0.94);
+  display:none;
+  align-items:center; justify-content:center;
+  z-index:100;
+  padding:2rem;
+}
+.lightbox.open{ display:flex; }
+.lightbox img{
+  max-width:min(900px, 92vw);
+  max-height:88vh;
+  object-fit:contain;
+  box-shadow:0 20px 60px rgba(0,0,0,0.7);
+}
+.lightbox-close{
+  position:absolute; top:1.2rem; right:1.6rem;
+  background:none; border:none;
+  color:var(--paper);
+  font-size:2rem;
+  cursor:pointer;
+  line-height:1;
+}
+
+/* ============ BOOK / CALL SHEET ============ */
+.book{
+  max-width:760px; margin:0 auto;
+  padding:2rem 1.5rem 7rem;
+  text-align:left;
+}
+.book-sub{
+  color:var(--muted);
+  max-width:52ch;
+  margin-bottom:2.4rem;
+}
+.call-sheet{
+  border:1px solid var(--line);
+  margin-bottom:2.2rem;
+}
+.call-row{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:1.1rem 1.4rem;
+  border-bottom:1px solid var(--line);
+  flex-wrap:wrap; gap:0.4rem;
+}
+.call-row:last-child{ border-bottom:none; }
+.call-label{
+  font-family:var(--mono);
+  font-size:0.7rem;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--gold);
+}
+.call-value{
+  font-weight:600;
+  transition:color .2s;
+}
+a.call-value:hover{ color:var(--gold); }
+
+/* ============ FOOTER ============ */
+.footer{
+  border-top:1px solid var(--line);
+  padding:2rem 1.5rem;
+  text-align:center;
+  font-family:var(--mono);
+  font-size:0.7rem;
+  letter-spacing:0.08em;
+  color:var(--muted);
+}
+
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <div class="nav-inner">
+    <span class="nav-mark">P.M.K.</span>
+    <nav class="nav-links">
+      <a href="#stats">Stats</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#book">Book</a>
+    </nav>
+    <a href="#book" class="nav-cta">Book Audition</a>
+  </div>
+</header>
+
+<!-- ============ HERO / CLAPPERBOARD ============ -->
+<section class="hero" id="top">
+  <div class="clapper" id="clapper">
+    <div class="clapper-top" id="clapperTop">
+      <div class="clapper-stripes"></div>
+    </div>
+    <div class="clapper-body">
+      <div class="slate-row slate-row--head">
+        <span class="slate-label">talent</span>
+        <span class="slate-label">profile</span>
+      </div>
+      <h1 class="slate-name">PATHAN<br>MASTAN KHAN</h1>
+      <div class="slate-row slate-row--foot">
+        <span class="slate-field"><span class="slate-field-label">roll</span> 001</span>
+        <span class="slate-field"><span class="slate-field-label">scene</span> new talent</span>
+        <span class="slate-field"><span class="slate-field-label">take</span> 01</span>
+      </div>
+    </div>
+  </div>
+  <p class="hero-sub">Represented for film · television · commercial casting</p>
+  <a href="#stats" class="scroll-cue" aria-label="Scroll to stats">↓</a>
+</section>
+
+<!-- ============ STATS ============ -->
+<section class="stats" id="stats">
+  <p class="eyebrow">Production Notes — Talent Data</p>
+  <h2 class="section-title">Stats &amp; Contact</h2>
+
+  <div class="stat-card-grid">
+    <div class="stat-card">
+      <span class="stat-label">Name</span>
+      <span class="stat-value">Pathan Mastan Khan</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Height</span>
+      <span class="stat-value">5'8" <span class="stat-alt">/ 173 cm</span></span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Weight</span>
+      <span class="stat-value">154 lbs <span class="stat-alt">/ 70 kg</span></span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Based In</span>
+      <span class="stat-value">Nuzvid, Andhra Pradesh, IN</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Phone</span>
+      <span class="stat-value"><a href="tel:+918374620940">+91 83746 20940</a></span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Email</span>
+      <span class="stat-value"><a href="mailto:masthanp.2k@gmail.com">masthanp.2k@gmail.com</a></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALLERY / CONTACT SHEET ============ -->
+<section class="gallery" id="gallery">
+  <p class="eyebrow">Portfolio</p>
+  <h2 class="section-title">Contact Sheet</h2>
+  <p class="gallery-sub">Headshots, full-body shots, and lookbook images. Click any frame to view full resolution.</p>
+
+  <div class="contact-sheet" id="contactSheet">
+    <div class="sprockets sprockets-top" aria-hidden="true"></div>
+    <div class="frame-grid" id="frameGrid">
+      <!-- frames injected by script.js -->
+    </div>
+    <div class="sprockets sprockets-bottom" aria-hidden="true"></div>
+  </div>
+
+  <div class="upload-block">
+    <input type="file" id="fileInput" accept="image/*" multiple hidden>
+    <button class="btn btn-outline" id="uploadBtn">
+      <span id="uploadBtnText">+ Upload New Photo(s)</span>
+    </button>
+    <p class="upload-hint" id="uploadHint">High-resolution images are saved directly to the online media library.</p>
+  </div>
+</section>
+
+<!-- ============ LIGHTBOX ============ -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">×</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<!-- ============ BOOK / CALL SHEET ============ -->
+<section class="book" id="book">
+  <p class="eyebrow">Call Sheet</p>
+  <h2 class="section-title">Book This Talent</h2>
+  <p class="book-sub">For audition requests, availability, or submissions — reach out directly.</p>
+
+  <div class="call-sheet">
+    <div class="call-row">
+      <span class="call-label">Phone</span>
+      <a class="call-value" href="tel:+918374620940">+91 83746 20940</a>
+    </div>
+    <div class="call-row">
+      <span class="call-label">Email</span>
+      <a class="call-value" href="mailto:masthanp.2k@gmail.com">masthanp.2k@gmail.com</a>
+    </div>
+    <div class="call-row">
+      <span class="call-label">Location</span>
+      <span class="call-value">Nuzvid, Andhra Pradesh, India</span>
+    </div>
+  </div>
+
+  <a href="mailto:masthanp.2k@gmail.com?subject=Audition%20Inquiry%20—%20Pathan%20Mastan%20Khan" class="btn btn-solid">Email to Book an Audition</a>
+</section>
+
+<footer class="footer">
+  <span>© <span id="year"></span> Pathan Mastan Khan — Talent Profile</span>
+</footer>
+
+<script>
+/* ============================================================
+   CONFIG — fill these in to make photo uploads go live.
+   See README.md for the 2-minute setup for each service.
+   ============================================================ */
+const CONFIG = {
+  // Cloudinary — stores the actual image files online.
+  CLOUDINARY_CLOUD_NAME: "YOUR_CLOUD_NAME",
+  CLOUDINARY_UPLOAD_PRESET: "YOUR_UNSIGNED_UPLOAD_PRESET",
+
+  // JSONBin — stores the *list* of photo URLs so the gallery
+  // is the same for every visitor, not just your own browser.
+  JSONBIN_BIN_ID: "YOUR_BIN_ID",
+  JSONBIN_API_KEY: "YOUR_JSONBIN_X_ACCESS_KEY",
+};
+
+const isConfigured = () =>
+  !CONFIG.CLOUDINARY_CLOUD_NAME.startsWith("YOUR_") &&
+  !CONFIG.CLOUDINARY_UPLOAD_PRESET.startsWith("YOUR_");
+
+const hasSharedStore = () =>
+  !CONFIG.JSONBIN_BIN_ID.startsWith("YOUR_") &&
+  !CONFIG.JSONBIN_API_KEY.startsWith("YOUR_");
+
+const LOCAL_KEY = "pmk_gallery_local_fallback";
+
+/* ============================================================
+   GALLERY STATE
+   ============================================================ */
+let photos = []; // array of { url }
+
+async function loadPhotos() {
+  if (hasSharedStore()) {
+    try {
+      const res = await fetch(
+        `https://api.jsonbin.io/v3/b/${CONFIG.JSONBIN_BIN_ID}/latest`,
+        { headers: { "X-Access-Key": CONFIG.JSONBIN_API_KEY } }
+      );
+      const data = await res.json();
+      photos = data?.record?.photos || [];
+      return;
+    } catch (e) {
+      console.warn("JSONBin load failed, falling back to local storage.", e);
+    }
+  }
+  // fallback: this browser only
+  photos = JSON.parse(localStorage.getItem(LOCAL_KEY) || "[]");
+}
+
+async function savePhotos() {
+  if (hasSharedStore()) {
+    try {
+      await fetch(`https://api.jsonbin.io/v3/b/${CONFIG.JSONBIN_BIN_ID}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Access-Key": CONFIG.JSONBIN_API_KEY,
+        },
+        body: JSON.stringify({ photos }),
+      });
+      return;
+    } catch (e) {
+      console.warn("JSONBin save failed, saving locally instead.", e);
+    }
+  }
+  localStorage.setItem(LOCAL_KEY, JSON.stringify(photos));
+}
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+const MIN_FRAMES = 6;
+
+function renderGallery() {
+  const grid = document.getElementById("frameGrid");
+  grid.innerHTML = "";
+
+  photos.forEach((p, i) => {
+    const frame = document.createElement("div");
+    frame.className = "frame";
+    frame.innerHTML = `
+      <span class="frame-num">${String(i + 1).padStart(2, "0")}</span>
+      <img src="${p.url}" alt="Portfolio photo ${i + 1}" loading="lazy">
+    `;
+    frame.addEventListener("click", () => openLightbox(p.url));
+    grid.appendChild(frame);
+  });
+
+  const emptySlots = Math.max(0, MIN_FRAMES - photos.length);
+  for (let i = 0; i < emptySlots; i++) {
+    const frame = document.createElement("div");
+    frame.className = "frame frame-empty";
+    frame.textContent = "AWAITING\nUPLOAD";
+    grid.appendChild(frame);
+  }
+}
+
+/* ============================================================
+   LIGHTBOX
+   ============================================================ */
+function openLightbox(url) {
+  document.getElementById("lightboxImg").src = url;
+  document.getElementById("lightbox").classList.add("open");
+}
+function closeLightbox() {
+  document.getElementById("lightbox").classList.remove("open");
+  document.getElementById("lightboxImg").src = "";
+}
+document.getElementById("lightboxClose").addEventListener("click", closeLightbox);
+document.getElementById("lightbox").addEventListener("click", (e) => {
+  if (e.target.id === "lightbox") closeLightbox();
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeLightbox();
+});
+
+/* ============================================================
+   UPLOAD
+   ============================================================ */
+const fileInput = document.getElementById("fileInput");
+const uploadBtn = document.getElementById("uploadBtn");
+const uploadBtnText = document.getElementById("uploadBtnText");
+const uploadHint = document.getElementById("uploadHint");
+
+uploadBtn.addEventListener("click", () => {
+  if (!isConfigured()) {
+    uploadHint.textContent =
+      "Photo hosting isn't connected yet — add your Cloudinary details in script.js (see README.md).";
+    return;
+  }
+  fileInput.click();
+});
+
+fileInput.addEventListener("change", async () => {
+  const files = Array.from(fileInput.files || []);
+  if (!files.length) return;
+
+  uploadBtnText.textContent = "Uploading…";
+  uploadBtn.disabled = true;
+
+  let successCount = 0;
+  for (const file of files) {
+    try {
+      const url = await uploadToCloudinary(file);
+      photos.unshift({ url });
+      successCount++;
+    } catch (e) {
+      console.error("Upload failed", e);
+    }
+  }
+
+  if (successCount) {
+    await savePhotos();
+    renderGallery();
+    uploadHint.textContent = `${successCount} photo(s) added to the online media library.`;
+  } else {
+    uploadHint.textContent = "Upload failed. Check your Cloudinary setup in script.js.";
+  }
+
+  uploadBtnText.textContent = "+ Upload New Photo(s)";
+  uploadBtn.disabled = false;
+  fileInput.value = "";
+});
+
+async function uploadToCloudinary(file) {
+  const form = new FormData();
+  form.append("file", file);
+  form.append("upload_preset", CONFIG.CLOUDINARY_UPLOAD_PRESET);
+
+  const res = await fetch(
+    `https://api.cloudinary.com/v1_1/${CONFIG.CLOUDINARY_CLOUD_NAME}/image/upload`,
+    { method: "POST", body: form }
+  );
+  if (!res.ok) throw new Error("Cloudinary upload failed");
+  const data = await res.json();
+  return data.secure_url;
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+(async function init() {
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  if (!isConfigured()) {
+    uploadHint.textContent =
+      "Photo hosting isn't connected yet — add your Cloudinary details in script.js (see README.md).";
+  } else if (!hasSharedStore()) {
+    uploadHint.textContent =
+      "Photos will upload online, but the gallery list is only saved on this browser until JSONBin is connected (see README.md).";
+  }
+
+  await loadPhotos();
+  renderGallery();
+})();
+
+</script>
+</body>
+</html>
