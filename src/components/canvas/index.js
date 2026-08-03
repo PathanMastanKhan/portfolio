@@ -1,4 +1,4 @@
-import ComputersCanvas from "./Computers";
+import ClapperCanvas from "./Clapper";
 import StarsCanvas from "./Stars";
 
-export { ComputersCanvas, StarsCanvas };
+export { ClapperCanvas, StarsCanvas };
