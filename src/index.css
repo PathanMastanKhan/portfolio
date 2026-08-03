@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+.hash-span {
+  margin-top: -100px;
+  padding-bottom: 100px;
+  display: block;
+}
+
+.font-display {
+  font-family: "Bebas Neue", sans-serif;
+}
+.font-mono {
+  font-family: "JetBrains Mono", monospace;
+}
+
+/* Sprocket holes for the contact-sheet gallery */
+.sprockets {
+  height: 16px;
+  background-image: radial-gradient(circle, #0d0c0a 3.5px, transparent 3.6px);
+  background-size: 22px 16px;
+  background-position: 11px center;
+  background-repeat: repeat-x;
+  background-color: #000000;
+}
+
+/* canvas- styles (3D model loading spinner) */
+.canvas-loader {
+  font-size: 10px;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  position: relative;
+  text-indent: -9999em;
+  animation: mulShdSpin 1.1s infinite ease;
+  transform: translateZ(0);
+}
+
+@keyframes mulShdSpin {
+  0%,
+  100% {
+    box-shadow: 0em -2.6em 0em 0em #f3efe6,
+      1.8em -1.8em 0 0em rgba(243, 239, 230, 0.2),
+      2.5em 0em 0 0em rgba(243, 239, 230, 0.2),
+      1.75em 1.75em 0 0em rgba(243, 239, 230, 0.2),
+      0em 2.5em 0 0em rgba(243, 239, 230, 0.2),
+      -1.8em 1.8em 0 0em rgba(243, 239, 230, 0.2),
+      -2.6em 0em 0 0em rgba(243, 239, 230, 0.5),
+      -1.8em -1.8em 0 0em rgba(243, 239, 230, 0.7);
+  }
+  12.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(243, 239, 230, 0.7),
+      1.8em -1.8em 0 0em #f3efe6, 2.5em 0em 0 0em rgba(243, 239, 230, 0.2),
+      1.75em 1.75em 0 0em rgba(243, 239, 230, 0.2),
+      0em 2.5em 0 0em rgba(243, 239, 230, 0.2),
+      -1.8em 1.8em 0 0em rgba(243, 239, 230, 0.2),
+      -2.6em 0em 0 0em rgba(243, 239, 230, 0.2),
+      -1.8em -1.8em 0 0em rgba(243, 239, 230, 0.5);
+  }
+  25% {
+    box-shadow: 0em -2.6em 0em 0em rgba(243, 239, 230, 0.5),
+      1.8em -1.8em 0 0em rgba(243, 239, 230, 0.7), 2.5em 0em 0 0em #f3efe6,
+      1.75em 1.75em 0 0em rgba(243, 239, 230, 0.2),
+      0em 2.5em 0 0em rgba(243, 239, 230, 0.2),
+      -1.8em 1.8em 0 0em rgba(243, 239, 230, 0.2),
+      -2.6em 0em 0 0em rgba(243, 239, 230, 0.2),
+      -1.8em -1.8em 0 0em rgba(243, 239, 230, 0.2);
+  }
+  37.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(243, 239, 230, 0.2),
+      1.8em -1.8em 0 0em rgba(243, 239, 230, 0.5),
+      2.5em 0em 0 0em rgba(243, 239, 230, 0.7), 1.75em 1.75em 0 0em #f3efe6,
+      0em 2.5em 0 0em rgba(243, 239, 230, 0.2),
+      -1.8em 1.8em 0 0em rgba(243, 239, 230, 0.2),
+      -2.6em 0em 0 0em rgba(243, 239, 230, 0.2),
+      -1.8em -1.8em 0 0em rgba(243, 239, 230, 0.2);
+  }
+  50% {
+    box-shadow: 0em -2.6em 0em 0em rgba(243, 239, 230, 0.2),
+      1.8em -1.8em 0 0em rgba(243, 239, 230, 0.2),
+      2.5em 0em 0 0em rgba(243, 239, 230, 0.5),
+      1.75em 1.75em 0 0em rgba(243, 239, 230, 0.7), 0em 2.5em 0 0em #f3efe6,
+      -1.8em 1.8em 0 0em rgba(243, 239, 230, 0.2),
+      -2.6em 0em 0 0em rgba(243, 239, 230, 0.2),
+      -1.8em -1.8em 0 0em rgba(243, 239, 230, 0.2);
+  }
+  62.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(243, 239, 230, 0.2),
+      1.8em -1.8em 0 0em rgba(243, 239, 230, 0.2),
+      2.5em 0em 0 0em rgba(243, 239, 230, 0.2),
+      1.75em 1.75em 0 0em rgba(243, 239, 230, 0.5),
+      0em 2.5em 0 0em rgba(243, 239, 230, 0.7), -1.8em 1.8em 0 0em #f3efe6,
+      -2.6em 0em 0 0em rgba(243, 239, 230, 0.2),
+      -1.8em -1.8em 0 0em rgba(243, 239, 230, 0.2);
+  }
+  75% {
+    box-shadow: 0em -2.6em 0em 0em rgba(243, 239, 230, 0.2),
+      1.8em -1.8em 0 0em rgba(243, 239, 230, 0.2),
+      2.5em 0em 0 0em rgba(243, 239, 230, 0.2),
+      1.75em 1.75em 0 0em rgba(243, 239, 230, 0.2),
+      0em 2.5em 0 0em rgba(243, 239, 230, 0.5),
+      -1.8em 1.8em 0 0em rgba(243, 239, 230, 0.7), -2.6em 0em 0 0em #f3efe6,
+      -1.8em -1.8em 0 0em rgba(243, 239, 230, 0.2);
+  }
+  87.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(243, 239, 230, 0.2),
+      1.8em -1.8em 0 0em rgba(243, 239, 230, 0.2),
+      2.5em 0em 0 0em rgba(243, 239, 230, 0.2),
+      1.75em 1.75em 0 0em rgba(243, 239, 230, 0.2),
+      0em 2.5em 0 0em rgba(243, 239, 230, 0.2),
+      -1.8em 1.8em 0 0em rgba(243, 239, 230, 0.5),
+      -2.6em 0em 0 0em rgba(243, 239, 230, 0.7), -1.8em -1.8em 0 0em #f3efe6;
+  }
+}
