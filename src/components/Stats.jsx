@@ -10,7 +10,7 @@ const StatsSection = () => {
     <>
       <motion.div variants={textVariant()} className="text-center">
         <p className={styles.sectionSubText}>Production Notes — Talent Data</p>
-        <h2 className={styles.sectionHeadText}>Stats &amp; Contact</h2>
+        <h2 className={styles.sectionHeadText}>Stats</h2>
       </motion.div>
 
       <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[1px] bg-line border border-line">
