@@ -653,6 +653,7 @@ const hasSharedStore = () =>
 
 const LOCAL_KEY = "pmk_gallery_local_fallback";
 const ADMIN_KEY = "pmk_admin_unlocked";
+let lastSharedStoreError = null;
 
 /* ============================================================
    ADMIN MODE — upload UI is hidden from regular visitors.
@@ -694,13 +695,15 @@ async function loadPhotos() {
     try {
       const res = await fetch(
         `https://api.jsonbin.io/v3/b/${CONFIG.JSONBIN_BIN_ID}/latest`,
-        { headers: { "X-Access-Key": CONFIG.JSONBIN_API_KEY } }
+        { headers: { "X-Master-Key": CONFIG.JSONBIN_API_KEY } }
       );
+      if (!res.ok) throw new Error(`JSONBin load returned ${res.status}`);
       const data = await res.json();
       photos = data?.record?.photos || [];
       return;
     } catch (e) {
       console.warn("JSONBin load failed, falling back to local storage.", e);
+      lastSharedStoreError = e.message || String(e);
     }
   }
   // fallback: this browser only
@@ -710,17 +713,20 @@ async function loadPhotos() {
 async function savePhotos() {
   if (hasSharedStore()) {
     try {
-      await fetch(`https://api.jsonbin.io/v3/b/${CONFIG.JSONBIN_BIN_ID}`, {
+      const res = await fetch(`https://api.jsonbin.io/v3/b/${CONFIG.JSONBIN_BIN_ID}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "X-Access-Key": CONFIG.JSONBIN_API_KEY,
+          "X-Master-Key": CONFIG.JSONBIN_API_KEY,
         },
         body: JSON.stringify({ photos }),
       });
+      if (!res.ok) throw new Error(`JSONBin save returned ${res.status}`);
+      lastSharedStoreError = null;
       return;
     } catch (e) {
       console.warn("JSONBin save failed, saving locally instead.", e);
+      lastSharedStoreError = e.message || String(e);
     }
   }
   localStorage.setItem(LOCAL_KEY, JSON.stringify(photos));
@@ -833,7 +839,11 @@ fileInput.addEventListener("change", async () => {
   if (successCount) {
     await savePhotos();
     renderGallery();
-    uploadHint.textContent = `${successCount} photo(s) added to the online media library.`;
+    if (lastSharedStoreError) {
+      uploadHint.textContent = `${successCount} photo(s) uploaded, but the shared gallery save FAILED (${lastSharedStoreError}). Photos are only visible on this device right now — check your JSONBin key in script.js.`;
+    } else {
+      uploadHint.textContent = `${successCount} photo(s) added to the online media library and saved for all visitors.`;
+    }
   } else {
     uploadHint.textContent = "Upload failed. Check your Cloudinary setup in script.js.";
   }
