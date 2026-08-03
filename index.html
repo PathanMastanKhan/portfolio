@@ -7,7 +7,7 @@
 <meta name="description" content="Official casting profile for Pathan. Stats, contact info, and portfolio gallery for casting directors." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&Rfamily=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg: #0D0C0A;
@@ -432,6 +432,31 @@ img{ max-width:100%; display:block; }
   line-height:1;
 }
 
+.lightbox-nav{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(28,26,20,0.6);
+  border:1px solid var(--line);
+  color:var(--paper);
+  font-size:2.4rem;
+  line-height:1;
+  width:52px; height:52px;
+  border-radius:50%;
+  cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:background .2s, color .2s, border-color .2s;
+}
+.lightbox-nav:hover{ background:var(--gold); color:var(--bg); border-color:var(--gold); }
+.lightbox-prev{ left:1.2rem; }
+.lightbox-next{ right:1.2rem; }
+
+@media (max-width:640px){
+  .lightbox-nav{ width:44px; height:44px; font-size:2rem; }
+  .lightbox-prev{ left:0.5rem; }
+  .lightbox-next{ right:0.5rem; }
+}
+
 /* ============ BOOK / CALL SHEET ============ */
 .book{
   max-width:760px; margin:0 auto;
@@ -522,7 +547,7 @@ a.call-value:hover{ color:var(--gold); }
 <!-- ============ STATS ============ -->
 <section class="stats" id="stats">
   <p class="eyebrow">Production Notes — Talent Data</p>
-  <h2 class="section-title">Stats</h2>
+  <h2 class="section-title">Stats &amp; Contact</h2>
 
   <div class="stat-card-grid">
     <div class="stat-card">
@@ -591,7 +616,9 @@ a.call-value:hover{ color:var(--gold); }
 <!-- ============ LIGHTBOX ============ -->
 <div class="lightbox" id="lightbox">
   <button class="lightbox-close" id="lightboxClose" aria-label="Close">×</button>
+  <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous photo">‹</button>
   <img id="lightboxImg" src="" alt="">
+  <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next photo">›</button>
 </div>
 
 <!-- ============ BOOK / CALL SHEET ============ -->
@@ -749,7 +776,7 @@ function renderGallery() {
       <img src="${p.url}" alt="Portfolio photo ${i + 1}" loading="lazy">
       ${isAdmin() ? `<button class="frame-delete" data-index="${i}" aria-label="Delete photo ${i + 1}" title="Delete photo">×</button>` : ""}
     `;
-    frame.querySelector("img").addEventListener("click", () => openLightbox(p.url));
+    frame.querySelector("img").addEventListener("click", () => openLightbox(i));
 
     if (isAdmin()) {
       frame.querySelector(".frame-delete").addEventListener("click", async (e) => {
@@ -778,20 +805,50 @@ function renderGallery() {
 /* ============================================================
    LIGHTBOX
    ============================================================ */
-function openLightbox(url) {
-  document.getElementById("lightboxImg").src = url;
+let lightboxIndex = 0;
+
+function openLightbox(index) {
+  lightboxIndex = index;
+  showLightboxPhoto();
   document.getElementById("lightbox").classList.add("open");
+}
+function showLightboxPhoto() {
+  document.getElementById("lightboxImg").src = photos[lightboxIndex].url;
+  const multiple = photos.length > 1;
+  document.getElementById("lightboxPrev").style.display = multiple ? "flex" : "none";
+  document.getElementById("lightboxNext").style.display = multiple ? "flex" : "none";
+}
+function showNextPhoto() {
+  if (!photos.length) return;
+  lightboxIndex = (lightboxIndex + 1) % photos.length;
+  showLightboxPhoto();
+}
+function showPrevPhoto() {
+  if (!photos.length) return;
+  lightboxIndex = (lightboxIndex - 1 + photos.length) % photos.length;
+  showLightboxPhoto();
 }
 function closeLightbox() {
   document.getElementById("lightbox").classList.remove("open");
   document.getElementById("lightboxImg").src = "";
 }
 document.getElementById("lightboxClose").addEventListener("click", closeLightbox);
+document.getElementById("lightboxNext").addEventListener("click", (e) => {
+  e.stopPropagation();
+  showNextPhoto();
+});
+document.getElementById("lightboxPrev").addEventListener("click", (e) => {
+  e.stopPropagation();
+  showPrevPhoto();
+});
 document.getElementById("lightbox").addEventListener("click", (e) => {
   if (e.target.id === "lightbox") closeLightbox();
 });
 document.addEventListener("keydown", (e) => {
+  if (!document.getElementById("lightbox").classList.contains("open")) return;
   if (e.key === "Escape") closeLightbox();
+  if (e.key === "ArrowRight") showNextPhoto();
+  if (e.key === "ArrowLeft") showPrevPhoto();
 });
 
 /* ============================================================
