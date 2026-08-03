@@ -22,5 +22,5 @@ export const contact = {
   email: "masthanp.2k@gmail.com",
   emailHref:
     "mailto:masthanp.2k@gmail.com?subject=Audition%20Inquiry%20—%20Pathan%20Mastan%20Khan",
-  location: "Nuzvid, Andhra Pradesh, India",
+  location: "Hyderabad, Telangana, India",
 };
