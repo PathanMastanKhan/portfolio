@@ -51,7 +51,7 @@ const GallerySection = () => {
     <>
       <motion.div variants={textVariant()} className="text-center">
         <p className={styles.sectionSubText}>Portfolio</p>
-        <h2 className={styles.sectionHeadText}>Contact Sheet</h2>
+        <h2 className={styles.sectionHeadText}>Images</h2>
         <p className="text-secondary max-w-[52ch] mx-auto mt-3">
           Headshots, full-body shots, and lookbook images. Click any frame to view full
           resolution.
