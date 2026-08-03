@@ -49,7 +49,7 @@ const Navbar = () => {
             ))}
           </ul>
 
-          
+          <a
             href="#contact"
             className="hidden sm:inline-block font-mono text-[12px] uppercase tracking-[0.08em] border border-gold text-gold px-4 py-2 hover:bg-gold hover:text-primary transition-colors"
           >
