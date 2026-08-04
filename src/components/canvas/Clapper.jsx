@@ -41,13 +41,13 @@ const Slate = () => {
     const t = clock.getElapsedTime() % 4; // 4-second loop
     let angle;
     if (t < 2.3) {
-      angle = 0.6; // held open (lifted up, like someone holding it ready)
+      angle = 0.75; // held open (lifted up, like someone holding it ready)
     } else if (t < 2.45) {
-      angle = THREE.MathUtils.lerp(0.6, 0, (t - 2.3) / 0.15); // sharp clap shut
+      angle = THREE.MathUtils.lerp(0.75, 0, (t - 2.3) / 0.15); // sharp clap shut
     } else if (t < 3.6) {
       angle = 0; // held closed
     } else {
-      angle = THREE.MathUtils.lerp(0, 0.6, (t - 3.6) / 0.4); // lift back open
+      angle = THREE.MathUtils.lerp(0, 0.75, (t - 3.6) / 0.4); // lift back open
     }
     if (clapRef.current) clapRef.current.rotation.x = angle;
   });
