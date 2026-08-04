@@ -38,22 +38,22 @@ const Slate = () => {
   const stripeTexture = useStripeTexture();
 
   useFrame(({ clock }) => {
-    const t = clock.getElapsedTime() % 4; // 4-second loop
+    const t = clock.getElapsedTime() % 3.6; // 3.6-second loop
     let angle;
-    if (t < 2.3) {
-      angle = 0.75; // held open (lifted up, like someone holding it ready)
-    } else if (t < 2.45) {
-      angle = THREE.MathUtils.lerp(0.75, 0, (t - 2.3) / 0.15); // sharp clap shut
-    } else if (t < 3.6) {
-      angle = 0; // held closed
+    if (t < 1.5) {
+      angle = 1.0; // held open — wide, unmistakable gap (~57°)
+    } else if (t < 1.65) {
+      angle = THREE.MathUtils.lerp(1.0, 0, (t - 1.5) / 0.15); // sharp clap shut
+    } else if (t < 3.2) {
+      angle = 0; // held closed — flush against the base
     } else {
-      angle = THREE.MathUtils.lerp(0, 0.75, (t - 3.6) / 0.4); // lift back open
+      angle = THREE.MathUtils.lerp(0, 1.0, (t - 3.2) / 0.4); // lift back open
     }
     if (clapRef.current) clapRef.current.rotation.x = angle;
   });
 
   return (
-    <group rotation={[0.12, -0.55, 0]} position={[0, -0.2, 0]}>
+    <group rotation={[0.08, -0.22, 0]} position={[0, -0.2, 0]}>
       {/* base board */}
       <mesh position={[0, -0.6, 0]} castShadow receiveShadow>
         <boxGeometry args={[3.2, 2, 0.15]} />
