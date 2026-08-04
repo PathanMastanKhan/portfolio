@@ -53,7 +53,7 @@ const Slate = () => {
   });
 
   return (
-    <group rotation={[0.12, -0.55, 0]} position={[1.7, -0.2, 0]}>
+    <group rotation={[0.12, -0.55, 0]} position={[0, -0.2, 0]}>
       {/* base board */}
       <mesh position={[0, -0.6, 0]} castShadow receiveShadow>
         <boxGeometry args={[3.2, 2, 0.15]} />
@@ -89,7 +89,7 @@ const ClapperCanvas = () => {
       frameloop="always"
       shadows
       dpr={[1, 2]}
-      camera={{ position: [3.2, 1.1, 6.2], fov: 30 }}
+      camera={{ position: [1.4, 1.1, 6.2], fov: 30 }}
       gl={{ preserveDrawingBuffer: true }}
     >
       <Suspense fallback={null}>
