@@ -40,16 +40,16 @@ const Slate = () => {
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime() % 4; // 4-second loop
     let angle;
-    if (t < 2.5) {
-      angle = 0.5; // held open
-    } else if (t < 2.7) {
-      angle = THREE.MathUtils.lerp(0.5, 0, (t - 2.5) / 0.2); // quick clap shut
-    } else if (t < 3.7) {
+    if (t < 2.3) {
+      angle = 0.6; // held open (lifted up, like someone holding it ready)
+    } else if (t < 2.45) {
+      angle = THREE.MathUtils.lerp(0.6, 0, (t - 2.3) / 0.15); // sharp clap shut
+    } else if (t < 3.6) {
       angle = 0; // held closed
     } else {
-      angle = THREE.MathUtils.lerp(0, 0.5, (t - 3.7) / 0.3); // reopen
+      angle = THREE.MathUtils.lerp(0, 0.6, (t - 3.6) / 0.4); // lift back open
     }
-    if (clapRef.current) clapRef.current.rotation.x = -angle;
+    if (clapRef.current) clapRef.current.rotation.x = angle;
   });
 
   return (
@@ -70,9 +70,11 @@ const Slate = () => {
         <lineBasicMaterial color="#C89B3C" linewidth={2} />
       </lineSegments>
 
-      {/* hinged clapper top */}
-      <group position={[0, 0.42, 0]}>
-        <mesh ref={clapRef} position={[0, 0.28, 0]} castShadow>
+      {/* hinged clapper top — ref is on the GROUP (the hinge line itself),
+          not the mesh, so rotating it swings the whole bar around the
+          correct pivot edge instead of tilting in place */}
+      <group ref={clapRef} position={[0, 0.42, 0]}>
+        <mesh position={[0, 0.28, 0]} castShadow>
           <boxGeometry args={[3.2, 0.55, 0.15]} />
           <meshStandardMaterial map={stripeTexture} roughness={0.5} />
         </mesh>
