@@ -35,9 +35,17 @@ function useStripeTexture() {
 
 const Slate = () => {
   const clapRef = useRef();
+  const groupRef = useRef();
   const stripeTexture = useStripeTexture();
 
   useFrame(({ clock }) => {
+    // TEMPORARY DIAGNOSTIC: fast continuous spin — if you see this
+    // spinning, animation is working and we just need to fix the clap.
+    // If nothing moves at all, it's a deployment/caching issue, not code.
+    if (groupRef.current) {
+      groupRef.current.rotation.y = clock.getElapsedTime() * 1.5;
+    }
+
     const t = clock.getElapsedTime() % 3.6; // 3.6-second loop
     let angle;
     if (t < 1.5) {
@@ -53,7 +61,7 @@ const Slate = () => {
   });
 
   return (
-    <group rotation={[0.08, -0.22, 0]} position={[0, -0.2, 0]}>
+    <group ref={groupRef} rotation={[0.08, -0.22, 0]} position={[0, -0.2, 0]}>
       {/* base board */}
       <mesh position={[0, -0.6, 0]} castShadow receiveShadow>
         <boxGeometry args={[3.2, 2, 0.15]} />
