@@ -1,4 +1,7 @@
-import { Navbar, Hero, Stats, Gallery, Contact, Footer, StarsCanvas } from "./components";
+import { lazy, Suspense } from "react";
+import { Navbar, Hero, Stats, Gallery, Contact, Footer } from "./components";
+
+const StarsCanvas = lazy(() => import("./components/canvas/Stars"));
 
 const App = () => {
   return (
@@ -11,7 +14,9 @@ const App = () => {
       <Gallery />
       <div className="relative z-0">
         <Contact />
-        <StarsCanvas />
+        <Suspense fallback={null}>
+          <StarsCanvas />
+        </Suspense>
         <Footer />
       </div>
     </div>
