@@ -39,22 +39,20 @@ const Slate = () => {
   const stripeTexture = useStripeTexture();
 
   useFrame(({ clock }) => {
-    // Gentle constant tilt on the whole slate so it reads as a 3D object,
-    // no spinning — the motion should come from the clapper arm only.
     if (groupRef.current) {
       groupRef.current.rotation.y = -0.12 + Math.sin(clock.getElapsedTime() * 0.3) * 0.03;
     }
 
-    const t = clock.getElapsedTime() % 3.6; // 3.6-second loop
+    const t = clock.getElapsedTime() % 3.6;
     let angle;
     if (t < 1.5) {
-      angle = 0.62; // held open — ~35°, matching a real clapperboard's ready position
+      angle = 0.62;
     } else if (t < 1.65) {
-      angle = THREE.MathUtils.lerp(0.62, 0, (t - 1.5) / 0.15); // sharp clap shut
+      angle = THREE.MathUtils.lerp(0.62, 0, (t - 1.5) / 0.15);
     } else if (t < 3.2) {
-      angle = 0; // held closed — flush against the base
+      angle = 0;
     } else {
-      angle = THREE.MathUtils.lerp(0, 0.62, (t - 3.2) / 0.4); // lift back open
+      angle = THREE.MathUtils.lerp(0, 0.62, (t - 3.2) / 0.4);
     }
     if (clapRef.current) clapRef.current.rotation.z = angle;
   });
@@ -62,7 +60,7 @@ const Slate = () => {
   return (
     <group ref={groupRef} rotation={[0.08, -0.12, 0]} position={[0, -0.2, 0]}>
       {/* base board */}
-      <mesh position={[0, -0.6, 0]} castShadow receiveShadow>
+      <mesh position={[0, -0.6, 0]}>
         <boxGeometry args={[3.2, 2, 0.15]} />
         <meshStandardMaterial color="#1C1A14" roughness={0.7} metalness={0.1} />
       </mesh>
@@ -77,14 +75,10 @@ const Slate = () => {
         <lineBasicMaterial color="#C89B3C" linewidth={2} />
       </lineSegments>
 
-      {/* hinged clapper top — pivot sits at the top-LEFT corner of the
-          base, matching a real clapperboard's hinge pin. The arm's own
-          left edge lines up with that pivot (mesh is offset to the
-          right by half its width) so rotating the group swings the
-          whole bar up-and-right around the pin, exactly like the
-          reference images — not a front/back tilt. */}
+      {/* hinged clapper top — pivot at top-LEFT corner, matching a real
+          clapperboard's hinge pin. Swings up-and-right around the pin. */}
       <group ref={clapRef} position={[-1.6, 0.4, 0.02]}>
-        <mesh position={[1.6, 0, 0]} castShadow>
+        <mesh position={[1.6, 0, 0]}>
           <boxGeometry args={[3.2, 0.55, 0.15]} />
           <meshStandardMaterial map={stripeTexture} roughness={0.5} />
         </mesh>
@@ -97,21 +91,13 @@ const ClapperCanvas = () => {
   return (
     <Canvas
       frameloop="always"
-      shadows
-      dpr={[1, 2]}
+      dpr={[1, 1]}
       camera={{ position: [0.4, 0.4, 9.5], fov: 26 }}
-      gl={{ preserveDrawingBuffer: true }}
+      gl={{ powerPreference: "high-performance", antialias: true }}
     >
       <Suspense fallback={null}>
-        <hemisphereLight intensity={0.35} groundColor="black" />
-        <spotLight
-          position={[-5, 8, 5]}
-          angle={0.3}
-          penumbra={1}
-          intensity={1.4}
-          castShadow
-          shadow-mapSize={1024}
-        />
+        <hemisphereLight intensity={0.4} groundColor="black" />
+        <directionalLight position={[-5, 8, 5]} intensity={1.1} />
         <pointLight intensity={0.5} position={[3, 2, 3]} color="#C89B3C" />
 
         <Slate />
