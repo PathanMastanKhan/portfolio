@@ -1,8 +1,9 @@
+import { lazy, Suspense } from "react";
 import { motion } from "framer-motion";
-
 import { styles } from "../styles";
-import { ClapperCanvas } from "./canvas";
 import { profile } from "../constants";
+
+const ClapperCanvas = lazy(() => import("./canvas/Clapper"));
 
 const Hero = () => {
   return (
@@ -25,7 +26,9 @@ const Hero = () => {
       </div>
 
       <div className="absolute inset-0 z-0">
-        <ClapperCanvas />
+        <Suspense fallback={null}>
+          <ClapperCanvas />
+        </Suspense>
       </div>
 
       <div className="absolute z-20 xs:bottom-10 bottom-32 w-full flex justify-center items-center">
