@@ -42,7 +42,7 @@ const Slate = () => {
     // Gentle constant tilt on the whole slate so it reads as a 3D object,
     // no spinning — the motion should come from the clapper arm only.
     if (groupRef.current) {
-      groupRef.current.rotation.y = -0.22 + Math.sin(clock.getElapsedTime() * 0.3) * 0.03;
+      groupRef.current.rotation.y = -0.12 + Math.sin(clock.getElapsedTime() * 0.3) * 0.03;
     }
 
     const t = clock.getElapsedTime() % 3.6; // 3.6-second loop
@@ -60,7 +60,7 @@ const Slate = () => {
   });
 
   return (
-    <group ref={groupRef} rotation={[0.08, -0.22, 0]} position={[0, -0.2, 0]}>
+    <group ref={groupRef} rotation={[0.08, -0.12, 0]} position={[0, -0.2, 0]}>
       {/* base board */}
       <mesh position={[0, -0.6, 0]} castShadow receiveShadow>
         <boxGeometry args={[3.2, 2, 0.15]} />
@@ -96,7 +96,7 @@ const ClapperCanvas = () => {
       frameloop="always"
       shadows
       dpr={[1, 2]}
-      camera={{ position: [1.4, 1.1, 6.2], fov: 30 }}
+      camera={{ position: [0.4, 0.4, 9.5], fov: 26 }}
       gl={{ preserveDrawingBuffer: true }}
     >
       <Suspense fallback={null}>
