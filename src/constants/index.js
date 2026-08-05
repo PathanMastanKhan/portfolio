@@ -6,7 +6,7 @@ export const navLinks = [
 export const profile = {
   name: "Pathan Mastan Khan",
   heroName: "PATHAN",
-  tagline: "Represented for film · television · commercial casting",
+  tagline: "Represented for film · television · commercial casting — [BUILD TEST v3]",
 };
 
 export const stats = [
