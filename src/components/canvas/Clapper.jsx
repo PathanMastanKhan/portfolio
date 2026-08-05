@@ -48,15 +48,15 @@ const Slate = () => {
     const t = clock.getElapsedTime() % 3.6; // 3.6-second loop
     let angle;
     if (t < 1.5) {
-      angle = 1.0; // held open — wide, unmistakable gap (~57°)
+      angle = 0.62; // held open — ~35°, matching a real clapperboard's ready position
     } else if (t < 1.65) {
-      angle = THREE.MathUtils.lerp(1.0, 0, (t - 1.5) / 0.15); // sharp clap shut
+      angle = THREE.MathUtils.lerp(0.62, 0, (t - 1.5) / 0.15); // sharp clap shut
     } else if (t < 3.2) {
       angle = 0; // held closed — flush against the base
     } else {
-      angle = THREE.MathUtils.lerp(0, 1.0, (t - 3.2) / 0.4); // lift back open
+      angle = THREE.MathUtils.lerp(0, 0.62, (t - 3.2) / 0.4); // lift back open
     }
-    if (clapRef.current) clapRef.current.rotation.x = angle;
+    if (clapRef.current) clapRef.current.rotation.z = angle;
   });
 
   return (
@@ -77,12 +77,14 @@ const Slate = () => {
         <lineBasicMaterial color="#C89B3C" linewidth={2} />
       </lineSegments>
 
-      {/* hinged clapper top — the hinge GROUP sits exactly at the arm's
-          back-top edge (not its middle), so the whole bar swings as one
-          rigid door: lifts UP and back to open, slaps DOWN and flush to
-          close — instead of wobbling toward/away from camera. */}
-      <group ref={clapRef} position={[0, 0.42, 0.02]}>
-        <mesh position={[0, -0.28, 0]} castShadow>
+      {/* hinged clapper top — pivot sits at the top-LEFT corner of the
+          base, matching a real clapperboard's hinge pin. The arm's own
+          left edge lines up with that pivot (mesh is offset to the
+          right by half its width) so rotating the group swings the
+          whole bar up-and-right around the pin, exactly like the
+          reference images — not a front/back tilt. */}
+      <group ref={clapRef} position={[-1.6, 0.4, 0.02]}>
+        <mesh position={[1.6, 0, 0]} castShadow>
           <boxGeometry args={[3.2, 0.55, 0.15]} />
           <meshStandardMaterial map={stripeTexture} roughness={0.5} />
         </mesh>
