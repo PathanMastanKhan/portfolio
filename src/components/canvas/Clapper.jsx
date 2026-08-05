@@ -77,11 +77,12 @@ const Slate = () => {
         <lineBasicMaterial color="#C89B3C" linewidth={2} />
       </lineSegments>
 
-      {/* hinged clapper top — ref is on the GROUP (the hinge line itself),
-          not the mesh, so rotating it swings the whole bar around the
-          correct pivot edge instead of tilting in place */}
-      <group ref={clapRef} position={[0, 0.42, 0]}>
-        <mesh position={[0, 0.28, 0]} castShadow>
+      {/* hinged clapper top — the hinge GROUP sits exactly at the arm's
+          back-top edge (not its middle), so the whole bar swings as one
+          rigid door: lifts UP and back to open, slaps DOWN and flush to
+          close — instead of wobbling toward/away from camera. */}
+      <group ref={clapRef} position={[0, 0.42, 0.02]}>
+        <mesh position={[0, -0.28, 0]} castShadow>
           <boxGeometry args={[3.2, 0.55, 0.15]} />
           <meshStandardMaterial map={stripeTexture} roughness={0.5} />
         </mesh>
