@@ -39,11 +39,10 @@ const Slate = () => {
   const stripeTexture = useStripeTexture();
 
   useFrame(({ clock }) => {
-    // TEMPORARY DIAGNOSTIC: fast continuous spin — if you see this
-    // spinning, animation is working and we just need to fix the clap.
-    // If nothing moves at all, it's a deployment/caching issue, not code.
+    // Gentle constant tilt on the whole slate so it reads as a 3D object,
+    // no spinning — the motion should come from the clapper arm only.
     if (groupRef.current) {
-      groupRef.current.rotation.y = clock.getElapsedTime() * 1.5;
+      groupRef.current.rotation.y = -0.22 + Math.sin(clock.getElapsedTime() * 0.3) * 0.03;
     }
 
     const t = clock.getElapsedTime() % 3.6; // 3.6-second loop
