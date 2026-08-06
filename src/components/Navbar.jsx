@@ -5,6 +5,10 @@ import { navLinks } from "../constants";
 import { menu, close } from "../assets";
 import { useAdmin } from "../hooks/useAdmin";
 
+const scrollToSection = (id) => {
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+};
+
 const Navbar = () => {
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
@@ -42,19 +46,22 @@ const Navbar = () => {
                 className={`${
                   active === nav.title ? "text-white-100" : "text-secondary"
                 } hover:text-white-100 font-mono text-[13px] uppercase tracking-[0.1em] cursor-pointer`}
-                onClick={() => setActive(nav.title)}
+                onClick={() => {
+                  setActive(nav.title);
+                  scrollToSection(nav.id);
+                }}
               >
-                <a href={`#${nav.id}`}>{nav.title}</a>
+                {nav.title}
               </li>
             ))}
           </ul>
 
-          <a
-            href="#contact"
+          <button
+            onClick={() => scrollToSection("contact")}
             className="hidden sm:inline-block font-mono text-[12px] uppercase tracking-[0.08em] border border-gold text-gold px-4 py-2 hover:bg-gold hover:text-primary transition-colors"
           >
             Contact
-          </a>
+          </button>
 
           <div className="sm:hidden flex flex-1 justify-end items-center">
             <img
@@ -79,15 +86,21 @@ const Navbar = () => {
                     onClick={() => {
                       setToggle(false);
                       setActive(nav.title);
+                      scrollToSection(nav.id);
                     }}
                   >
-                    <a href={`#${nav.id}`}>{nav.title}</a>
+                    {nav.title}
                   </li>
                 ))}
                 <li className="font-mono text-[13px] uppercase tracking-[0.08em] text-gold">
-                  <a href="#contact" onClick={() => setToggle(false)}>
+                  <button
+                    onClick={() => {
+                      setToggle(false);
+                      scrollToSection("contact");
+                    }}
+                  >
                     Contact
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>
