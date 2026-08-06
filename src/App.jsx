@@ -6,6 +6,10 @@ const StarsCanvas = lazy(() => import("./components/canvas/Stars"));
 const App = () => {
   return (
     <div className="relative z-0 bg-primary">
+      <Suspense fallback={null}>
+        <StarsCanvas />
+      </Suspense>
+
       <div className="relative">
         <Navbar />
         <Hero />
@@ -14,9 +18,6 @@ const App = () => {
       <Gallery />
       <div className="relative z-0">
         <Contact />
-        <Suspense fallback={null}>
-          <StarsCanvas />
-        </Suspense>
         <Footer />
       </div>
     </div>
