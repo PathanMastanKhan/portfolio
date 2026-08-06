@@ -58,7 +58,7 @@ const Slate = () => {
   });
 
   return (
-    <group ref={groupRef} rotation={[0.08, -0.12, 0]} position={[0, -0.2, 0]}>
+    <group ref={groupRef} rotation={[0.08, -0.12, 0]} position={[0, 0.25, 0]}>
       {/* base board */}
       <mesh position={[0, -0.6, 0]}>
         <boxGeometry args={[3.2, 2, 0.15]} />
