@@ -1,6 +1,6 @@
 import React, { Suspense, useMemo, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Preload } from "@react-three/drei";
+import { OrbitControls, Preload } from "@react-three/drei";
 import * as THREE from "three";
 
 /* Builds the black/gold diagonal-stripe texture for the clapper top,
@@ -39,20 +39,19 @@ const Slate = () => {
   const stripeTexture = useStripeTexture();
 
   useFrame(({ clock }) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y = -0.12 + Math.sin(clock.getElapsedTime() * 0.3) * 0.03;
-    }
-
-    const t = clock.getElapsedTime() % 3.6;
+    // Viewing angle is now controlled by OrbitControls (drag to rotate
+    // the board 360°), so we no longer auto-tilt the whole group here —
+    // only the clap motion below still runs automatically, unchanged.
+    const t = clock.getElapsedTime() % 3.6; // 3.6-second loop
     let angle;
     if (t < 1.5) {
-      angle = 0.62;
+      angle = 0.62; // held open — ~35°, matching a real clapperboard's ready position
     } else if (t < 1.65) {
-      angle = THREE.MathUtils.lerp(0.62, 0, (t - 1.5) / 0.15);
+      angle = THREE.MathUtils.lerp(0.62, 0, (t - 1.5) / 0.15); // sharp clap shut
     } else if (t < 3.2) {
-      angle = 0;
+      angle = 0; // held closed — flush against the base
     } else {
-      angle = THREE.MathUtils.lerp(0, 0.62, (t - 3.2) / 0.4);
+      angle = THREE.MathUtils.lerp(0, 0.62, (t - 3.2) / 0.4); // lift back open
     }
     if (clapRef.current) clapRef.current.rotation.z = angle;
   });
@@ -75,8 +74,12 @@ const Slate = () => {
         <lineBasicMaterial color="#C89B3C" linewidth={2} />
       </lineSegments>
 
-      {/* hinged clapper top — pivot at top-LEFT corner, matching a real
-          clapperboard's hinge pin. Swings up-and-right around the pin. */}
+      {/* hinged clapper top — pivot sits at the top-LEFT corner of the
+          base, matching a real clapperboard's hinge pin. The arm's own
+          left edge lines up with that pivot (mesh is offset to the
+          right by half its width) so rotating the group swings the
+          whole bar up-and-right around the pin, exactly like the
+          reference images — not a front/back tilt. */}
       <group ref={clapRef} position={[-1.6, 0.4, 0.02]}>
         <mesh position={[1.6, 0, 0]}>
           <boxGeometry args={[3.2, 0.55, 0.15]} />
@@ -101,6 +104,16 @@ const ClapperCanvas = () => {
         <pointLight intensity={0.5} position={[3, 2, 3]} color="#C89B3C" />
 
         <Slate />
+
+        {/* Drag to spin the board around 360° in any direction.
+            Only viewing angle changes here — the clap animation inside
+            Slate keeps running exactly as before, untouched. */}
+        <OrbitControls
+          enableZoom={false}
+          enablePan={false}
+          rotateSpeed={0.6}
+          autoRotate={false}
+        />
       </Suspense>
       <Preload all />
     </Canvas>
